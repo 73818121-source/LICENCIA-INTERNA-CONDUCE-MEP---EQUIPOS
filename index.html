@@ -29,8 +29,8 @@ body {
 
 /* Para impresión en hoja A4 */
 @page {
-  size: A4;
-  margin: 10mm;
+  size: 170mm 108mm; /* TAMAÑO EXACTO DEL CARNET */
+  margin: 0;
 }
 
 
@@ -721,24 +721,57 @@ body {
 }
 
 
+
+@page {
+  size: 170mm 108mm; /* TAMAÑO EXACTO DEL CARNET */
+  margin: 0;
+}
+
 @media print {
-  
+
   body {
-    background: white;
-    gap: 20px;
-
-    
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    overflow: visible !important;
   }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   .tarjeta {
-    box-shadow: none;
-    border: 1px solid #999;
-  }
+    --escala: 1.7; /* 🔴 AJUSTA SOLO ESTE VALOR */
 
-    .tarjeta {
-    transform: scale(0.50);
+    transform:
+            translate(
+        calc((1 - var(--escala)) * 50%),
+        calc((1 - var(--escala)) * -10%)
+      )
+      scale(var(--escala));
+
     transform-origin: top left;
+    margin: 0;
+    box-shadow: none !important;
+    border: 1px solid #999 !important;
+    page-break-after: always;
   }
 
+  .cara-frontal,
+  .cara-posterior {
+    display: block;
+  }
+
+  #pagina-inicio,
+  #btn-imprimir,
+  #btn-nueva,
+  #buscar-dni,
+  #resultado-busqueda,
+  hr {
+    display: none !important;
+  }
+  
 }
 
 
